@@ -83,3 +83,47 @@ formNode.onsubmit = function (e) {
   Animal.stessopadrone(animali[0], animali[1]);
   console.log(animali);
 };
+
+//////////////////BOTTONE ELIMINA////////////////////////////////////////////
+
+function crea(variabile, indice) {
+  const p = document.createElement("p");
+  const button = document.createElement("button"); // Creiamo il bottone di eliminazione
+  button.textContent = "Elimina"; // Testo del bottone
+  button.onclick = function () {
+    div.removeChild(p); // Rimuoviamo il paragrafo dalla lista
+    animali.splice(indice, 1); // Rimuoviamo l'animale dall'array
+  };
+  p.textContent = variabile;
+  p.appendChild(button); // Aggiungiamo il bottone al paragrafo
+  div.appendChild(p);
+  const animalDiv = document.createElement("div"); // Creiamo un div per l'animale
+  animalDiv.classList.add(variabile.nome); // Aggiungiamo una classe con il nome dell'animale
+  document.body.appendChild(animalDiv); // Aggiungiamo il div al documento
+}
+
+formNode.onsubmit = function (e) {
+  e.preventDefault();
+
+  const animale = new Animal(fname.value, lname.value, species.value, breed.value);
+
+  animali.push(animale);
+  fname.value = "";
+  lname.value = "";
+  species.value = "";
+  breed.value = "";
+
+  crea(
+    " nome " +
+      animale.nome +
+      " proprietario " +
+      animale.proprietario +
+      " specie " +
+      animale.specie +
+      " razza " +
+      animale.razza,
+    animali.length - 1 // Passiamo anche l'indice dell'animale
+  );
+
+  Animal.stessopadrone(animali[0], animali[1]);
+};
